@@ -1,12 +1,10 @@
 # API for fibi intern hiring chalenge
 
-### This API is hosted on heroku at :
-Base URL: `https://srbk-fibi.herokuapp.com/`
+> ## This is a better implementation that uses a task-queue to extract metadata and thus reduces the load from the API server.
 
+#### If you want to run the server locally, make to sure to have node.js installed
 
-### If you want to run the server locally, make to sure to have node.js installed
-
-+ rename `sample-env` to `.env` and fill in the the Database URI
++ rename `sample-env` to `.env` and fill in the the details
 
 ```bash
 $ npm install
@@ -18,11 +16,11 @@ You will get the following output if everything is okay
 > fibi@1.0.0 start /mnt/code/Node/fibi
 > node app.js
 
-Server running at port: 5400
+Server running at port: 5000
 Connected to MongoDB
 ```
 
-Localhost Base URL: `localhost:5400`
+Localhost Base URL: `localhost:5000`
 ## Reference
 ### Image object
 ```js
@@ -112,7 +110,7 @@ Send these options as query parameters
 ```
 > Example query
 
-`https://srbk-fibi.herokuapp.com/getImages?nameString=man&offset=7`
+`localhost:5000/getImages?nameString=man&offset=7`
 
 > Response
 
