@@ -1,1 +1,4 @@
 MONGO_URI=//Place your local/cloud mongo uri here.
+DB_HOST=//redis host
+DB_PORT=//redis port
+DB_PASS=//redis password

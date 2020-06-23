@@ -2,29 +2,16 @@ require('dotenv').config();
 
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT || 5400;
-const mongoose = require('mongoose');
+const PORT = process.env.PORT || 5000;
 
 const { body, validationResult, header, query } = require('express-validator');
+const { saveImage, getImages } = require('./utils/controller');
 
-//DB models
-const { ImageModel } = require("./models/Image");
-const { extractMetadata } = require("./utils/metadata");
 
 
 // Express middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
-// Connect to mongoDB
-mongoose.connect(process.env.MONGO_URI,
-    {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    })
-    .then(() => console.log("Connected to MongoDB"))
-    .catch((err) => console.log("MongoDB Connection failed", err));
-
 
 //  POST route to add Image
 app.post('/addImage', [
@@ -39,23 +26,11 @@ app.post('/addImage', [
         return res.status(422).json({ errors: errors.array() });
 
     else {
-        let { name, url, type } = req.body;
-        let metaData;
-        try { // Try to extract metadata
-            metaData = await extractMetadata(url);
-        } catch (error) {
-            console.log(error);
-        }
-
         // Save it to DB
-        ImageModel.createImage({ name, url, type, metaData })
-            .then((data) => {
-                res.json(data);
-            }).catch((error) => {
-                res.json({ created: false, error: error });
-            });
+        saveImage(req.body)
+            .then((data) => res.json(data))
+            .catch((error) => res.json({ created: false, error: error }));
     }
-
 });
 
 // GET route to return Image Array
@@ -68,17 +43,9 @@ app.get('/getImages', [
         return res.status(422).json({ errors: errors.array() });
 
     else {
-        try {
-            let options = {
-                nameString: req.query.nameString,
-                limit: req.query.limit || 10,
-                offset: req.query.offset || 0
-            }
-            let result = await ImageModel.getImages(options);
-            res.json(result.docs);
-        } catch (error) {
-            res.status(503).json({ error: error.message });
-        }
+        getImages(req.query)
+            .then(docs => res.json(docs))
+            .catch(error => res.status(503).json({ error: error.message }));
     }
 })
 

@@ -34,10 +34,10 @@ Localhost Base URL: `localhost:5400`
   "metaData": {
     "size": "bytes",
     "extType": "extension",
-    "mime": "extracted mime"
+    "mime": "extracted mime type"
 }
 ```
-
+ **Note :** Metadata of images are automatically tagged in the background using a task queue, so when you search for an image you may not see the metadata property instantly but at a later point of time it will be available.
 
 ## Add Image
 
