@@ -1,10 +1,12 @@
 # API for fibi intern hiring chalenge
 
-### This API is hosted on heroku at :
+### Note: Please check out the [dev](https://github.com/sarbikbetal/fibi/tree/dev) branch for a better implementation.
+
+#### This API is hosted on heroku at :
 Base URL: `https://srbk-fibi.herokuapp.com/`
 
 
-### If you want to run the server locally, make to sure to have node.js installed
+#### If you want to run the server locally, make to sure to have node.js installed
 
 + rename `sample-env` to `.env` and fill in the the Database URI
 
@@ -38,8 +40,9 @@ Localhost Base URL: `localhost:5400`
 }
 ```
 
+## Routes
 
-## Add Image
+### Add Image
 
 + POST `{basUrl}/addImage`
 
@@ -96,7 +99,7 @@ Send a json body with header `Content-Type` as `application/json`
 }
 ```
 
-## Get Images
+### Get Images
 
 + GET `{baseUrl}/getImages`
 
