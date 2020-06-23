@@ -15,7 +15,7 @@ const ImageSchema = new Schema({
         type: String,
         required: true,
     },
-    metaData: String
+    metaData: Object
 })
 
 ImageSchema.plugin(mongoosePaginate);
@@ -25,7 +25,8 @@ ImageSchema.statics.createImage = function (ImageObj) {
         let image = new ImageModel({
             "url": ImageObj.url,
             "name": ImageObj.name,
-            "type": ImageObj.type
+            "type": ImageObj.type,
+            "metaData": ImageObj.metaData
         });
 
         image.save(function (err, data) {

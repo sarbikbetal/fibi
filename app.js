@@ -2,13 +2,14 @@ require('dotenv').config();
 
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT || 5500;
+const PORT = process.env.PORT || 5400;
 const mongoose = require('mongoose');
 
 const { body, validationResult, header, query } = require('express-validator');
 
 //DB models
 const { ImageModel } = require("./models/Image");
+const { extractMetadata } = require("./utils/metadata");
 
 
 // Express middlewares
@@ -31,7 +32,7 @@ app.post('/addImage', [
     body('url', "Invalid or empty url").isURL().bail(),
     body('name', "Name is required").exists(),
     body('type', "Invalid or empty mime type").isMimeType(),
-], (req, res) => {
+], async (req, res) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty())
@@ -39,11 +40,22 @@ app.post('/addImage', [
 
     else {
         let { name, url, type } = req.body;
-        ImageModel.createImage({ name, url, type }).then((done) => {
-            res.json({ created: done });
-        }).catch((error) => {
-            res.json({ created: false, error: error });
-        });
+        let metaData;
+        try {
+            metaData = await extractMetadata(url);
+        } catch (error) {
+            console.log(error);
+        }
+
+        ImageModel.createImage({ name, url, type, metaData })
+            .then((done) => {
+                res.json({
+                    created: done,
+                    metaData: metaData ? true : false
+                });
+            }).catch((error) => {
+                res.json({ created: false, error: error });
+            });
     }
 
 });
