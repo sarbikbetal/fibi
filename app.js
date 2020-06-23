@@ -41,18 +41,16 @@ app.post('/addImage', [
     else {
         let { name, url, type } = req.body;
         let metaData;
-        try {
+        try { // Try to extract metadata
             metaData = await extractMetadata(url);
         } catch (error) {
             console.log(error);
         }
 
+        // Save it to DB
         ImageModel.createImage({ name, url, type, metaData })
-            .then((done) => {
-                res.json({
-                    created: done,
-                    metaData: metaData ? true : false
-                });
+            .then((data) => {
+                res.json(data);
             }).catch((error) => {
                 res.json({ created: false, error: error });
             });
@@ -65,16 +63,17 @@ app.get('/getImages', [
     query('nameString', "nameString is required").exists()
 ], async (req, res) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty()) {
+
+    if (!errors.isEmpty())
         return res.status(422).json({ errors: errors.array() });
-    } else {
+
+    else {
         try {
             let options = {
                 nameString: req.query.nameString,
                 limit: req.query.limit || 10,
                 offset: req.query.offset || 0
             }
-
             let result = await ImageModel.getImages(options);
             res.json(result.docs);
         } catch (error) {

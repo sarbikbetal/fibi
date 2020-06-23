@@ -31,8 +31,7 @@ ImageSchema.statics.createImage = function (ImageObj) {
 
         image.save(function (err, data) {
             if (err) reject(err);
-            console.log("Imaged saved", data);
-            resolve(true);
+            resolve(image);
         });
     })
 }
