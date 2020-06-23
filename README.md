@@ -58,13 +58,15 @@ Send a json body with header `Content-Type` as `application/json`
 ```json
 // On success - Returns Image Object
 {
-  "_id": ObjectID,
-  "url": url,
-  "name": filename,
-  "type": mime type,
+  "_id": "5ef2276ea58578001714ca45",
+  "url": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.MPU123oNkP4wjscYp4aO_AHaKd%26pid%3DApi&f=1",
+  "name": "man.jpg",
+  "type": "image/jpeg",
   "metaData": {
-    "size": bytes,
-    "extType": extension
+    "size": 28670,
+    "extType": "jpg",
+    "mime": "image/jpeg"
+  }
 }
 
 // On error
