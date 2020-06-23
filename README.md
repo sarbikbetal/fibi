@@ -6,6 +6,8 @@ Base URL: `https://srbk-fibi.herokuapp.com/`
 
 ### If you want to run the server locally, make to sure to have node.js installed
 
++ rename `sample-env` to `.env` and fill in the the Database URI
+
 ```bash
 $ npm install
 $ npm start
@@ -25,14 +27,14 @@ Localhost Base URL: `localhost:5400`
 ### Image object
 ```js
 {
-  "_id": ObjectID,
-  "url": url,
-  "name": filename,
-  "type": mime type,
+  "_id": "ObjectID",
+  "url": "url",
+  "name": "filename",
+  "type": "mime type",
   "metaData": {
-    "size": bytes,
-    "extType": extension,
-    "mime": extracted mime
+    "size": "bytes",
+    "extType": "extension",
+    "mime": "extracted mime"
 }
 ```
 
